@@ -67,6 +67,7 @@ class RedditContentObject(object):
         self._info_url = info_url or reddit_session.config['info']
         self.reddit_session = reddit_session
         self._underscore_names = underscore_names
+        self._json_data = None
         self.has_fetched = self._populate(json_dict, fetch)
 
     def __eq__(self, other):
@@ -125,6 +126,8 @@ class RedditContentObject(object):
         # TODO: Remove this wikipagelisting hack
         if isinstance(json_dict, list):
             json_dict = {'_tmp': json_dict}
+
+        self._json_data = json_dict
 
         for name, value in six.iteritems(json_dict):
             if self._underscore_names and name in self._underscore_names:
